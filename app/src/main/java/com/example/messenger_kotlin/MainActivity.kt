@@ -4,6 +4,8 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseAuthException
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_main.text_already
@@ -20,6 +22,19 @@ class MainActivity : AppCompatActivity() {
             //確認用
             Log.d("Main", "Email :" + email)
             Log.d("Main", "Password :" + password)
+
+            //Firebase:passwordとemailでユーザ作成
+            FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener{
+                    if(!it.isSuccessful){
+                        return@addOnCompleteListener
+                    }else {
+
+                    }
+
+                }
+
+
         }
 
         text_already.setOnClickListener{
