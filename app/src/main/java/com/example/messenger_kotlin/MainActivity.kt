@@ -31,10 +31,7 @@ class MainActivity : AppCompatActivity() {
                     }else {
 
                     }
-
                 }
-
-
         }
 
         text_already.setOnClickListener{
