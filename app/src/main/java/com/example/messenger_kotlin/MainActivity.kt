@@ -28,7 +28,10 @@ class MainActivity : AppCompatActivity() {
                 .addOnCompleteListener{
                     if(!it.isSuccessful){
                         return@addOnCompleteListener
+
+                        Log.d("Main", "Success user create")
                     }else {
+                        Log.d("Main", "Success user uncreate")
 
                     }
                 }
