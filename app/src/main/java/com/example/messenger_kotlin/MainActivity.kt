@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthException
 import kotlinx.android.synthetic.main.activity_login.*
@@ -23,18 +24,30 @@ class MainActivity : AppCompatActivity() {
             Log.d("Main", "Email :" + email)
             Log.d("Main", "Password :" + password)
 
+            if(email.isEmpty()){
+                //画面中央に表示してすぐに消えるやつ
+                Toast.makeText(this, "メールアドレスを入力してください", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            if(password.isEmpty()){
+                //画面中央に表示してすぐに消えるやつ
+                Toast.makeText(this, "パスワードを入力してください", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
             //Firebase:passwordとemailでユーザ作成
             FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener{
                     if(!it.isSuccessful){
                         return@addOnCompleteListener
-
                         Log.d("Main", "Success user create")
-                    }else {
-                        Log.d("Main", "Success user uncreate")
-
                     }
                 }
+                .addOnFailureListener {
+                    Toast.makeText(this, "アカウント作成に失敗しました", Toast.LENGTH_SHORT).show()
+                }
+
         }
 
         text_already.setOnClickListener{
