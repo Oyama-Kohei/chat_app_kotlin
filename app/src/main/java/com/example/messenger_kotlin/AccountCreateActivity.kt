@@ -94,6 +94,9 @@ class AccountCreateActivity : AppCompatActivity() {
         val ref = FirebaseStorage.getInstance().getReference("/images/$filename")
 
         ref.putFile(selectedPhotoUri !!)
+            .addOnSuccessListener {
+                Log.d("RegisterActivity", "Success upload image")
+            }
 
     }
 }
