@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#6200EE</color>
-    <color name="colorPrimaryDark">#3700B3</color>
-    <color name="colorAccent">#03DAC5</color>
+    <color name="colorCaramic">#CDCDC0</color>
+    <color name="colorHaze">#8E9B97</color>
+    <color name="colorWaterway">#537072</color>
 </resources>
