@@ -3,18 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_account_create"
-    app:startDestination="@id/accountCreateFragment">
+    app:startDestination="@id/AccountCreateFragment">
 
     <fragment
-        android:id="@+id/accountCreateFragment"
+        android:id="@+id/AccountCreateFragment"
         android:name="com.example.messenger_kotlin.AccountCreateFragment"
         android:label="fragment_accountcreate"
         tools:layout="@layout/fragment_accountcreate" >
-        <action
-            android:id="@+id/action_accountCreateFragment_to_nav_login"
-            app:destination="@id/nav_login" />
     </fragment>
-    <include app:graph="@navigation/nav_login" />
-
 
 </navigation>
