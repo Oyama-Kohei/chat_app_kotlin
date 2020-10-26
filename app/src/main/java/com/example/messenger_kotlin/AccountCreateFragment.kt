@@ -78,13 +78,13 @@ class AccountCreateFragment : Fragment() {
 
         if (email.isEmpty()) {
             //画面中央に表示してすぐに消えるやつ
-//            Toast.makeText(getActivity(),"メールアドレスを入力してください", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context,"メールアドレスを入力してください", Toast.LENGTH_SHORT).show()
             return
         }
 
         if (password.isEmpty()) {
             //画面中央に表示してすぐに消えるやつ
-//            Toast.makeText(getContext(), "パスワードを入力してください", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, "パスワードを入力してください", Toast.LENGTH_SHORT).show()
             return
         }
 
@@ -97,7 +97,7 @@ class AccountCreateFragment : Fragment() {
                 }
             }
             .addOnFailureListener {
-//                Toast.makeText(getContext(), "アカウント作成に失敗しました", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "アカウント作成に失敗しました", Toast.LENGTH_SHORT).show()
             }
     }
 
@@ -111,6 +111,3 @@ class AccountCreateFragment : Fragment() {
             }
     }
 }
-
-
-

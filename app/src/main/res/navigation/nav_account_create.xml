@@ -10,6 +10,14 @@
         android:name="com.example.messenger_kotlin.AccountCreateFragment"
         android:label="fragment_accountcreate"
         tools:layout="@layout/fragment_accountcreate" >
+        <action
+            android:id="@+id/action_AccountCreateFragment_to_accountCreateCheckFragment"
+            app:destination="@id/AccountCreateCheckFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/AccountCreateCheckFragment"
+        android:name="com.example.messenger_kotlin.AccountCreateCheckFragment"
+        android:label="fragment_accountcreate_check"
+        tools:layout="@layout/fragment_accountcreate_check" />
 
 </navigation>
