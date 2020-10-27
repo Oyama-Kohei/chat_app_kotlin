@@ -11,7 +11,6 @@ import kotlinx.android.synthetic.main.fragment_accountcreate.view.*
 
 class AccountCreateCheckFragment : Fragment() {
 
-    var selectedPhotoUri: Uri? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
