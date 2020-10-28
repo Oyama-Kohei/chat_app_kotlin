@@ -23,10 +23,10 @@ import kotlinx.android.synthetic.main.fragment_accountcreate.view.*
 import java.security.AccessController.getContext
 import java.util.*
 
-
 class AccountCreateFragment : Fragment() {
 
-    var selectedPhotoUri: Uri? = null
+//    private lateinit var viewModel: AccountCreateViewModel
+    private var selectedPhotoUri: Uri? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -35,12 +35,8 @@ class AccountCreateFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_accountcreate, container, false)
 
-        val email = view.editText_Email_CreateAccount.text.toString()
-        val password = view.editText_Password_CreateAccount.text.toString()
-
-
         view.button_CreateAccount.setOnClickListener {
-            performAccountCreate(email, password, selectedPhotoUri)
+            performAccountCreate()
         }
 
         view.button_Register_photo.setOnClickListener {
@@ -74,10 +70,14 @@ class AccountCreateFragment : Fragment() {
     }
 
 
-    private fun performAccountCreate(email: String, password: String, selectedPhotoUri: Uri?) {
+    private fun performAccountCreate() {
+
+        val email = view?.editText_Email_CreateAccount?.text.toString()
+        val password = view?.editText_Password_CreateAccount?.text.toString()
 
         if (email.isEmpty()) {
             //画面中央に表示してすぐに消えるやつ
+            Log.d("RegisterActivity", "$email")
             Toast.makeText(context,"メールアドレスを入力してください", Toast.LENGTH_SHORT).show()
             return
         }
