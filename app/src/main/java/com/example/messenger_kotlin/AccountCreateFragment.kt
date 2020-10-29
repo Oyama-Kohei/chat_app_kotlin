@@ -88,20 +88,26 @@ class AccountCreateFragment : Fragment() {
             return
         }
 
+        var mAuth = FirebaseAuth.getInstance();
+
         //Firebase:passwordとemailでユーザ作成
-        FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
-            .addOnCompleteListener {
-                if (!it.isSuccessful) {
-                    uploadImageToFirebase(selectedPhotoUri)
-                    return@addOnCompleteListener
+            mAuth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener() {
+                    if (!it.isSuccessful) {
+                        Toast.makeText(context, "アカウント作成", Toast.LENGTH_SHORT).show()
+                        uploadImageToFirebase(selectedPhotoUri)
+                        return@addOnCompleteListener
+                    }
                 }
-            }
-            .addOnFailureListener {
-                Toast.makeText(context, "アカウント作成に失敗しました", Toast.LENGTH_SHORT).show()
-            }
+        }
+//            .addOnFailureListener {
+//                Toast.makeText(context, "アカウント作成に失敗しました", Toast.LENGTH_SHORT).show()
+//            }
     }
 
     private fun uploadImageToFirebase(selectedPhotoUri: Uri?) {
+        if(selectedPhotoUri == null) return
+
         val filename = UUID.randomUUID().toString()
         val ref = FirebaseStorage.getInstance().getReference("/images/$filename")
 
