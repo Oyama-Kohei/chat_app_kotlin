@@ -1,32 +1,24 @@
 package com.example.messenger_kotlin
 
 import android.app.Activity
-import android.app.PendingIntent.getActivity
-import android.content.ContentResolver
-import android.content.Context
 import android.content.Intent
 import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.storage.FirebaseStorage
+import androidx.fragment.app.viewModels
 import kotlinx.android.synthetic.main.fragment_accountcreate.*
 import kotlinx.android.synthetic.main.fragment_accountcreate.view.*
-import java.security.AccessController.getContext
-import java.util.*
 
 class AccountCreateFragment : Fragment() {
 
-//    private lateinit var viewModel: AccountCreateViewModel
+    private val viewModel: AccountCreateViewModel by viewModels()
     private var selectedPhotoUri: Uri? = null
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -36,7 +28,11 @@ class AccountCreateFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_accountcreate, container, false)
 
         view.button_CreateAccount.setOnClickListener {
-            performAccountCreate()
+            val username = view.editText_Username_CreateAccount?.text.toString()
+            val email = view.editText_Email_CreateAccount?.text.toString()
+            val password = view.editText_Password_CreateAccount?.text.toString()
+
+           viewModel.updateCustomer(selectedPhotoUri, username, email, password)
         }
 
         view.button_Register_photo.setOnClickListener {
@@ -67,53 +63,5 @@ class AccountCreateFragment : Fragment() {
             val bitmapDrawable = BitmapDrawable(bitmap)
             button_Register_photo.setBackgroundDrawable(bitmapDrawable)
         }
-    }
-
-
-    private fun performAccountCreate() {
-
-        val email = view?.editText_Email_CreateAccount?.text.toString()
-        val password = view?.editText_Password_CreateAccount?.text.toString()
-
-        if (email.isEmpty()) {
-            //画面中央に表示してすぐに消えるやつ
-            Log.d("RegisterActivity", "$email")
-            Toast.makeText(context,"メールアドレスを入力してください", Toast.LENGTH_SHORT).show()
-            return
-        }
-
-        if (password.isEmpty()) {
-            //画面中央に表示してすぐに消えるやつ
-            Toast.makeText(context, "パスワードを入力してください", Toast.LENGTH_SHORT).show()
-            return
-        }
-
-        var mAuth = FirebaseAuth.getInstance();
-
-        //Firebase:passwordとemailでユーザ作成
-            mAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener() {
-                    if (!it.isSuccessful) {
-                        Toast.makeText(context, "アカウント作成", Toast.LENGTH_SHORT).show()
-                        uploadImageToFirebase(selectedPhotoUri)
-                        return@addOnCompleteListener
-                    }
-                }
-        }
-//            .addOnFailureListener {
-//                Toast.makeText(context, "アカウント作成に失敗しました", Toast.LENGTH_SHORT).show()
-//            }
-    }
-
-    private fun uploadImageToFirebase(selectedPhotoUri: Uri?) {
-        if(selectedPhotoUri == null) return
-
-        val filename = UUID.randomUUID().toString()
-        val ref = FirebaseStorage.getInstance().getReference("/images/$filename")
-
-        ref.putFile(selectedPhotoUri!!)
-            .addOnSuccessListener {
-                Log.d("RegisterActivity", "Success upload image")
-            }
     }
 }
