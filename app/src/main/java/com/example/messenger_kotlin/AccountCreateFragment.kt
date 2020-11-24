@@ -11,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import kotlinx.android.synthetic.main.fragment_accountcreate.*
 import kotlinx.android.synthetic.main.fragment_accountcreate.view.*
 
@@ -18,7 +19,6 @@ class AccountCreateFragment : Fragment() {
 
     private val viewModel: AccountCreateViewModel by viewModels()
     private var selectedPhotoUri: Uri? = null
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -41,17 +41,11 @@ class AccountCreateFragment : Fragment() {
             intent.type = "image/*"
             startActivityForResult(intent, 0)
         }
-//        text_already.setOnClickListener {
+        text_already.setOnClickListener {
 //            findNavController().navigate(R.id.nav_login)
-//        }
+        }
         return view
     }
-
-
-//    onActivityResultメソッドには、startActivityForResultの引数としたリクエストコードと、遷移後のActivity からの結果として 結果コード と データ の２つの値を受け取ります。
-//    結果コードは RESULT_OK か RESULT_CANCELED のどちらかで、結果を返す側の Activity にて適切な値が返るようにコーディングする必要があります。
-//    データは結果コード以外の任意の値を受け取る為の物で、こちらも結果を返す側の Activity で値をセットします。で値をセットします
-
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)

@@ -4,7 +4,9 @@ import android.app.Application
 import android.content.Context
 import android.net.Uri
 import android.util.Log
+import android.util.Patterns
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.ViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.storage.FirebaseStorage
@@ -19,10 +21,37 @@ class AccountCreateViewModel (
         email: String,
         password: String
     ){
-        if (email.isEmpty()) {
+        if(email.isEmpty()) {
+            val show = AlertDialog.Builder(AccountCreateActivity())
+                .setTitle("ERROR！")
+                .setMessage("パス入力してください")
+                .setPositiveButton("OK") { dialog, which -> }
+                .show()
             return
         }
-        if (password.isEmpty()) {
+        else if(Patterns.EMAIL_ADDRESS.matcher(email).matches() == false){
+            val show = AlertDialog.Builder(AccountCreateActivity())
+                .setTitle("ERROR！")
+                .setMessage("パスワードが適切じゃない")
+                .setPositiveButton("OK") { dialog, which -> }
+                .show()
+            return
+        }
+
+        if(password.isEmpty()) {
+            val show = AlertDialog.Builder(AccountCreateActivity())
+                .setTitle("ERROR！")
+                .setMessage("入力してください")
+                .setPositiveButton("OK") { dialog, which -> }
+                .show()
+            return
+        }
+        else if(password.length < 6) {
+            val show = AlertDialog.Builder(AccountCreateActivity())
+                .setTitle("ERROR！")
+                .setMessage("足りねえぜ")
+                .setPositiveButton("OK") { dialog, which -> }
+                .show()
             return
         }
         else {
@@ -48,16 +77,6 @@ class AccountCreateViewModel (
         email: String,
         password: String) {
 
-        if (email.isEmpty()) {
-            return
-        }
-
-        if (password.isEmpty()) {
-            //画面中央に表示してすぐに消えるやつ
-//            Toast.makeText(context, "パスワードを入力してください", Toast.LENGTH_SHORT).show()
-            return
-        }
-
         //Firebase:passwordとemailでユーザ作成
         FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener() {
@@ -68,14 +87,8 @@ class AccountCreateViewModel (
             }
 
             .addOnFailureListener {
-//                Toast.makeText(context, "アカウント作成に失敗しました", Toast.LENGTH_SHORT).show()
+                    return@addOnFailureListener
             }
     }
 
 }
-
-/*Androidアーキテクチャコンポーネントのビューモデルの場合、
-メモリリークとして、アクティビティコンテキストをアクティビティのViewModelに渡すことはお勧めできません。
-したがって、ViewModelでコンテキストを取得するには、ViewModelクラスでAndroid ViewModelクラスを拡張する
-必要があります。このようにして、以下のサンプルコードに示すようなコンテキストを取得できます。
- */
