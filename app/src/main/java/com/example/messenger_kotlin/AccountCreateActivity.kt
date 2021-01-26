@@ -145,7 +145,9 @@ class AccountCreateActivity : AppCompatActivity() {
     }
 }
 
-class User(val uid: String, val toString: String, val profileImageUri: String)
+class User(val uid: String, val username: String, val profileImageUri: String){
+    constructor(): this("","","")
+}
 
 
 
