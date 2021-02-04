@@ -1,5 +1,6 @@
 package com.example.messenger_kotlin
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -24,6 +25,10 @@ class NewMessageActivity : AppCompatActivity() {
 
         fetchUsers()
     }
+
+    companion object{
+        val USER_KEY = "USER_KEY"
+    }
     private fun fetchUsers(){
         val ref = FirebaseDatabase.getInstance().getReference("/users")
         ref.addListenerForSingleValueEvent(object: ValueEventListener {
@@ -40,7 +45,10 @@ class NewMessageActivity : AppCompatActivity() {
 
                 adapter.setOnItemClickListener{item, view ->
 
+                    val userItem = item as UserItem
+
                     val intent = Intent(view.context, ChatLogActivity::class.java)
+                    intent.putExtra(USER_KEY, userItem.user.username)
                     startActivity(intent)
 
                     finish()
@@ -54,7 +62,7 @@ class NewMessageActivity : AppCompatActivity() {
     }
 }
 
-class UserItem(val user:User): Item<ViewHolder>() {
+class UserItem(val user: User): Item<ViewHolder>() {
     override fun bind(viewHolder: ViewHolder, position: Int) {
         viewHolder.itemView.user_name.text = user.username
 

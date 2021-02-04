@@ -2,7 +2,6 @@ package com.example.messenger_kotlin
 
 import android.app.Activity
 import android.content.Intent
-import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
@@ -145,9 +144,7 @@ class AccountCreateActivity : AppCompatActivity() {
     }
 }
 
-class User(val uid: String, val username: String, val profileImageUri: String){
-    constructor(): this("","","")
-}
+
 
 
 
