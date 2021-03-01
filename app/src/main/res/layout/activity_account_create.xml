@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorHaze"
-    tools:context=".AccountCreateFragment">
+    tools:context=".AccountCreateActivity">
 
     <TextView
         android:id="@+id/text_kotlinMessenger"
@@ -25,7 +25,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/button_Register_photo"
+        android:id="@+id/selectphoto_button_register"
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:layout_marginTop="16dp"
@@ -53,7 +53,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_Register_photo" />
+        app:layout_constraintTop_toBottomOf="@+id/selectphoto_button_register" />
 
     <EditText
         android:id="@+id/editText_Email_CreateAccount"
@@ -94,30 +94,40 @@
         app:layout_constraintTop_toBottomOf="@+id/editText_Email_CreateAccount" />
 
     <Button
-        android:id="@+id/button_CreateAccount"
+        android:id="@+id/button_create_account"
         android:layout_width="0dp"
         android:layout_height="60dp"
         android:layout_marginStart="24dp"
         android:layout_marginLeft="24dp"
-        android:layout_marginTop="36dp"
         android:layout_marginEnd="24dp"
         android:layout_marginRight="24dp"
-        android:text="@string/create_account"
+        android:layout_marginBottom="80dp"
         android:background="@drawable/round_button"
+        android:text="@string/nextpage_text"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText_Password_CreateAccount" />
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/text_already"
+        android:id="@+id/already_have_account_test_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginBottom="16dp"
         android:text="@string/already_text"
         android:textColor="@android:color/background_light"
         android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_CreateAccount" />
+        app:layout_constraintTop_toBottomOf="@+id/button_create_account"
+        app:layout_constraintVertical_bias="0.325" />
 
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/selectphoto_imageview_register"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        app:layout_constraintBottom_toBottomOf="@+id/selectphoto_button_register"
+        app:layout_constraintEnd_toEndOf="@+id/selectphoto_button_register"
+        tools:ignore="MissingConstraints" />
 </androidx.constraintlayout.widget.ConstraintLayout>
