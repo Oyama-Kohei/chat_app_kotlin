@@ -3,6 +3,10 @@ package com.example.messenger_kotlin
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.ChildEventListener
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.squareup.picasso.Picasso
 import com.xwray.groupie.GroupAdapter
@@ -19,29 +23,59 @@ class ChatLogActivity : AppCompatActivity() {
     val TAG = "ChatLog"
     }
 
+    val adapter = GroupAdapter<ViewHolder>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_chat_log)
 
         val user = intent.getParcelableExtra<User>(NewMessageActivity.USER_KEY)
 
-        if (user != null) {
-            supportActionBar?.title = user.username
-        }
+        //setupDummyData()
+        listenForMessage()
 
-        setupDummyData()
         button_send_chat.setOnClickListener{
             Log.d(TAG, "Attemp to send message")
             performSendMessage()
         }
     }
 
+    private fun listenForMessage(){
+        val ref = FirebaseDatabase.getInstance().getReference("/messages")
+
+        ref.addChildEventListener(object: ChildEventListener{
+            override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
+                val chatMessage = snapshot.getValue(ChatMessage::class.java)
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+
+            override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
+                TODO("Not yet implemented")
+            }
+
+            override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {
+                TODO("Not yet implemented")
+            }
+
+            override fun onChildRemoved(snapshot: DataSnapshot) {
+                TODO("Not yet implemented")
+            }
+        })
+    }
+
     private fun performSendMessage(){
 
+        val user = intent.getParcelableExtra<User>(NewMessageActivity.USER_KEY)
+
         val text = editText_chat_log.text.toString()
+        val fromId = FirebaseAuth.getInstance().uid
+        val toId = user?.uid
 
         val reference = FirebaseDatabase.getInstance().getReference("/messages").push()
-        val chatMessage = ChatMessage()
+        val chatMessage = ChatMessage(reference.key!!, text, fromId!!, toId!!, System.currentTimeMillis() / 1000)
         reference.setValue(chatMessage)
             .addOnSuccessListener {
                 Log.d(TAG, "sendボタン")
@@ -58,9 +92,7 @@ class ChatLogActivity : AppCompatActivity() {
         recyclerview_chat_log.adapter = adapter
     }
 }
-class ChatMessage(val id: String, val text: String, val fromId: String, val toId: String, val timestamp: Long){
 
-}
 
 class ChatFromItem(val text:String): Item<ViewHolder>() {
     override fun bind(viewHolder: ViewHolder, position: Int) {
