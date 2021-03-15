@@ -16,7 +16,7 @@
         android:layout_marginBottom="8dp"
         android:ems="10"
         android:hint="Enter Message"
-        android:textColor="@android:color/white"
+        android:textColor="@android:color/black"
         android:inputType="textPersonName"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/button_send_chat"

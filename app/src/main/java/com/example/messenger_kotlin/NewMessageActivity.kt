@@ -73,9 +73,3 @@ class UserItem(val user: User): Item<ViewHolder>() {
     }
 }
 
-
-//class CustomAdapter: RecyclerView.Adapter<ViewHolder> {
-//    override fun onBindViewHolder(p0, p1: int) {
-//        TODO("Not yet implemented")
-//    }
-//}
